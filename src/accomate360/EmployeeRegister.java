@@ -63,4 +63,28 @@ public class EmployeeRegister {
             ex.printStackTrace();
         }
     }
+    public static void showEmployee(){
+        try{
+            String employeeID = JOptionPane.showInputDialog("Enter employee ID to search: ");
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = CallTheConnection.connectionCode();
+            PreparedStatement st = con.prepareStatement("select * from emptable where employeeID=?");
+            st.setString(1,employeeID);
+            ResultSet rs = st.executeQuery();
+            if(rs.next()){
+                String employeeId = rs.getString(1);
+                String name = rs.getString(2);
+                String password = rs.getString(3);
+                String email = rs.getString(4);
+                String phoneNo = rs.getString(5);
+                String address  = rs.getString(6);
+                String salary = rs.getString(7);
+                String IFSCcode = rs.getString(8);
+                String accNo = rs.getString(9);
+                JOptionPane.showMessageDialog(null,employeeId+" "+name+" "+password+" "+email+" "+phoneNo+" "+address+" "+salary+" "+IFSCcode+" "+accNo);
+            }
+        }catch(ClassNotFoundException | SQLException ex){
+            ex.printStackTrace();
+        }
+    }
 }

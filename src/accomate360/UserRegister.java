@@ -6,6 +6,7 @@
 package accomate360;
 
 import emergency.connection.CallTheConnection;
+import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -55,13 +56,32 @@ public class UserRegister {
                 String phoneNo = rs.getString(5);
                 String email = rs.getString(6);
                 String address = rs.getString(7);
-                JOptionPane.showMessageDialog(null,userId+" "+password+" "+name+" "+lastname+" "+phoneNo+" "+email+" "+address);
+                out.println(userId+" "+password+" "+name+" "+lastname+" "+phoneNo+" "+email+" "+address);
             }
         }catch(ClassNotFoundException | SQLException ex){
             ex.printStackTrace();
         }
     }
     public static void showUser(){
-        
+        try{
+            String userID = JOptionPane.showInputDialog("Enter user ID to search: ");
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = CallTheConnection.connectionCode();
+            PreparedStatement st = con.prepareStatement("select * from usertable where userId=?");
+            st.setString(1,userID);
+            ResultSet rs = st.executeQuery();
+            if(rs.next()){
+                String userId = rs.getString(1);
+                String password = rs.getString(2);
+                String name = rs.getString(3);
+                String lastName = rs.getString(4);
+                String phoneNo = rs.getString(5);
+                String email = rs.getString(6);
+                String address  = rs.getString(7);
+                JOptionPane.showMessageDialog(null,userId+" "+password+" "+name+" "+lastName+" "+phoneNo+" "+email+" "+address);
+            }
+        }catch(ClassNotFoundException | SQLException ex){
+            ex.printStackTrace();
+        }
     }
 }
