@@ -20,7 +20,7 @@ public class Accomate360 {
         int operationNo = Integer.parseInt(JOptionPane.showInputDialog("Enter 1 to register a new account.\nEnter 2 to register a new employee."
                 + "\nEnter 3 to register a new query.\nEnter 4 to show all user accounts.\nEnter 5 to show all employee accounts."
                 + "\nEnter 6 to show all queries.\nEnter 7 to search a pirticular user.\nEnter 8 to search a pirticular query."
-                + "\nEnter 9 to search a pirticular Employeee.\nEnter 10 to delete a pirticular employee account."));
+                + "\nEnter 9 to search a pirticular Employeee.\nEnter 10 to delete a pirticular employee account.\nEnter 11 to update user data."));
         
         switch(operationNo){
             case 1:
@@ -52,6 +52,9 @@ public class Accomate360 {
                 break;
             case 10:
                 EmployeeRegister.deleteEmployee();
+                break;
+            case 11:
+                UserRegister.update();
                 break;
         }
     }   

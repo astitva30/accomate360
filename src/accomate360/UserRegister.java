@@ -84,4 +84,41 @@ public class UserRegister {
             ex.printStackTrace();
         }
     }
+    public static void update(){
+        try{
+            String userId = JOptionPane.showInputDialog("Enter the user ID");
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = CallTheConnection.connectionCode();
+            PreparedStatement st = con.prepareStatement("select * from usertable where userId=?");
+            st.setString(1,userId);
+            ResultSet rs = st.executeQuery();
+            if(rs.next()){
+                String userID = rs.getString(1);
+                String password = rs.getString(2);
+                String name = rs.getString(3);
+                String lastName = rs.getString(4);
+                String phoneNo = rs.getString(5);
+                String email = rs.getString(6);
+                String address  = rs.getString(7);
+                JOptionPane.showMessageDialog(null,userId+" "+password+" "+name+" "+lastName+" "+phoneNo+" "+email+" "+address);
+                
+                int operationNo = Integer.parseInt(JOptionPane.showInputDialog("Enter 1 to update name."));
+                switch(operationNo){
+                    case 1:
+                        String uName = JOptionPane.showInputDialog("Enter new Name: ");
+                        String query = "update usertable set name=? where userId=?";
+                        PreparedStatement st1 = con.prepareStatement(query);
+                        st1.setString(1,uName);
+                        st1.setString(2,rs.getString(1));
+                        st1.executeUpdate();
+                        out.println("Record Updated!!");
+                }
+            }else{
+                out.println("No record for this user ID found.");
+            }
+           
+        }catch(SQLException | ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+    }
 }

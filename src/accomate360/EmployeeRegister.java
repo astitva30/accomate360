@@ -87,7 +87,7 @@ public class EmployeeRegister {
             ex.printStackTrace();
         }
     }
-    public static void deleteEmployee(){
+    public static void deleteEmployee() {
         try{
             String empID = JOptionPane.showInputDialog("Enter employee ID to delete employee account.");
             Class.forName("com.mysql.jdbc.Driver");
