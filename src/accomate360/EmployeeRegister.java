@@ -87,4 +87,17 @@ public class EmployeeRegister {
             ex.printStackTrace();
         }
     }
+    public static void deleteEmployee(){
+        try{
+            String empID = JOptionPane.showInputDialog("Enter employee ID to delete employee account.");
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = CallTheConnection.connectionCode();
+            PreparedStatement st = con.prepareStatement("delete from emptable where employeeID=?");
+            st.setString(1,empID);
+            st.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Record deleted successfully!!");
+        }catch(SQLException | ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+    }
 }
