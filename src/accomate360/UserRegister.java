@@ -100,18 +100,50 @@ public class UserRegister {
                 String phoneNo = rs.getString(5);
                 String email = rs.getString(6);
                 String address  = rs.getString(7);
-                JOptionPane.showMessageDialog(null,userId+" "+password+" "+name+" "+lastName+" "+phoneNo+" "+email+" "+address);
+                JOptionPane.showMessageDialog(null,userId+" "+name+" "+lastName+" "+phoneNo+" "+email+" "+address);
                 
-                int operationNo = Integer.parseInt(JOptionPane.showInputDialog("Enter 1 to update name."));
+                int operationNo = Integer.parseInt(JOptionPane.showInputDialog("Enter 1 to update name.\nEnter 2 to update Last Name.\nEnter 3 to update password."));
+                String query;
                 switch(operationNo){
                     case 1:
+                        //code to update name 
                         String uName = JOptionPane.showInputDialog("Enter new Name: ");
-                        String query = "update usertable set name=? where userId=?";
+                        query = "update usertable set name=? where userId=?";
                         PreparedStatement st1 = con.prepareStatement(query);
                         st1.setString(1,uName);
                         st1.setString(2,rs.getString(1));
                         st1.executeUpdate();
                         out.println("Record Updated!!");
+                        break;                        
+                    case 2:
+                        //code to update lastname
+                        String uLastName = JOptionPane.showInputDialog("Enter new Last Name: ");
+                        query = "update usertable set lastName=? where userId=?";
+                        PreparedStatement st2 = con.prepareStatement(query);
+                        st2.setString(1,uLastName);
+                        st2.setString(2,userId);
+                        st2.executeUpdate();
+                        out.println("Record Updated !!");
+                        break;
+                    case 3:
+                        String oldPassword = JOptionPane.showInputDialog("Enter current password: ");
+                        if(oldPassword.equals(password)){
+                            String newPassword = JOptionPane.showInputDialog("Enter new password: ");
+                            String confirmPassword = JOptionPane.showInputDialog("Confirm new password: ");
+                            if(newPassword.equals(confirmPassword)){
+                                query = "update usertable set password=? where userId=?";
+                            PreparedStatement st3 = con.prepareStatement(query);
+                            st3.setString(1,newPassword);
+                            st3.setString(2, userID);
+                            st3.executeUpdate();
+                            JOptionPane.showMessageDialog(null,"Password Upadated!!");
+                            }else{
+                                JOptionPane.showMessageDialog(null,"Both the passwords do not match!!");
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(null,"Wrong Password!");
+                        }
+                        break;
                 }
             }else{
                 out.println("No record for this user ID found.");
