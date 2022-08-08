@@ -92,7 +92,8 @@ public class UserRegister {
             PreparedStatement st = con.prepareStatement("select * from usertable where userId=?");
             st.setString(1,userId);
             ResultSet rs = st.executeQuery();
-            if(rs.next()){
+            String oldPassword = JOptionPane.showInputDialog("Enter the password: ");
+            if(rs.next() && rs.getString(2).equals(oldPassword)){
                 String userID = rs.getString(1);
                 String password = rs.getString(2);
                 String name = rs.getString(3);
@@ -126,27 +127,22 @@ public class UserRegister {
                         out.println("Record Updated !!");
                         break;
                     case 3:
-                        String oldPassword = JOptionPane.showInputDialog("Enter current password: ");
-                        if(oldPassword.equals(password)){
                             String newPassword = JOptionPane.showInputDialog("Enter new password: ");
                             String confirmPassword = JOptionPane.showInputDialog("Confirm new password: ");
                             if(newPassword.equals(confirmPassword)){
                                 query = "update usertable set password=? where userId=?";
-                            PreparedStatement st3 = con.prepareStatement(query);
-                            st3.setString(1,newPassword);
-                            st3.setString(2, userID);
-                            st3.executeUpdate();
-                            JOptionPane.showMessageDialog(null,"Password Upadated!!");
+                                PreparedStatement st3 = con.prepareStatement(query);
+                                st3.setString(1,newPassword);
+                                st3.setString(2, userID);
+                                st3.executeUpdate();
+                                JOptionPane.showMessageDialog(null,"Password Upadated!!");
                             }else{
                                 JOptionPane.showMessageDialog(null,"Both the passwords do not match!!");
                             }
-                        }else{
-                            JOptionPane.showMessageDialog(null,"Wrong Password!");
-                        }
                         break;
                 }
             }else{
-                out.println("No record for this user ID found.");
+                out.println("Enter valid userID and Password.");
             }
            
         }catch(SQLException | ClassNotFoundException ex){
